@@ -1,0 +1,222 @@
+% ------------------ \MyQ quote -----------------
+% #1: lang
+% #2: label
+% #3: text
+\NewDocumentCommand{\MyQ}{m m +m}
+{%
+  % check for label
+  \ifstrempty{#2}{\relax}{\label{#2}}%
+  % check for language
+  {%
+    \ifstrempty{#1}%
+    {\begin{otherlanguage*}{spanish}}%
+      % else
+      {\begin{otherlanguage*}{#1}}%
+        \ShL% debug
+        % if spanish
+        \ifstrequal{#1}{spanish}%
+        % then
+        {\enquote{#3}}%
+        % else
+        {%
+          \ifstrequal{#1}{greek}%
+          {#3}%
+          {\textit{#3}}%
+        }%
+      \end{otherlanguage*}%
+    }%
+}
+
+
+% ------------------ \MyC citation -----------------
+% #1: language
+% #2: label
+% #3: original language text
+% #4: translation text
+% #5: reference
+\NewDocumentCommand{\MyC}{m m +m +m m}
+{%
+  {%
+    % check for label
+    \ifstrempty{#2}{\relax}{\label{#2}}%
+      % select language of original quote
+      \begin{otherlanguage*}{#1}%
+        % #3: ---- original quote ----
+        \ShL% debug
+        % if spanish:
+        \ifstrequal{#1}{spanish}%
+          % then:
+          {\enquote{#3}}%
+          % else, if greek:
+          {\ifstrequal{#1}{greek}%
+              {\textup{{#3}}}%
+              % else, all others 
+              {\textit{#3}}%
+            }%
+          \end{otherlanguage*}% close either \begin{otherlanguage}
+          % #4: trans.
+          \ifstrempty{#4}{\relax}%
+            {%
+              {%
+                \begin{otherlanguage*}{spanish}%
+                  \ShL% debug
+                  \space\enquote{#4}%
+                \end{otherlanguage*}%
+              }%
+            }%
+            % #5: ref
+            \ifstrempty{#5}{\relax}{\space#5}%
+            }%
+          }
+
+
+% -------------------- lexquote ---------------------
+\DeclareQuoteStyle{lexquotes}
+  {‹}{›}{‹}{›}
+  \newcommand*{\lexquote}[1]{%
+    \begingroup%
+    \setquotestyle{lexquotes}%
+    \enquote{#1}%
+    \endgroup%
+  }
+
+
+% -------------------- indentedpar ---------------------
+\NewDocumentEnvironment{indentedpar}{}
+{\begin{list}{}%
+    {\setlength\rightmargin{28pt}%
+      \setlength\leftmargin{28pt}}%
+  \item[]\small\ignorespaces}
+  {\end{list}}
+
+
+% -------------------- myverse ---------------------
+% \NewDocumentEnvironment{myverse}{}
+% {\begin{list}{}%
+%     {\setlength\rightmargin{28pt}%
+%       \setlength\leftmargin{28pt}}%
+%   \item[]\small\ignorespaces}
+%   {\end{list}}
+% \NewDocumentEnvironment{myverse}{}
+% {\begin{verse}%
+%     \small}
+%   {\end{verse}}
+
+
+% --------------- smparnum -----------------
+% paragraph sidepars
+\newcommand*{\smparnum}[1]{%
+  \sidepar{%
+    {\small¶#1}}%
+}
+
+% --------------- smnoteparnum -----------------
+% paragraph sidepars for notes
+\newcommand*{\smnoteparnum}[1]{%
+  \sideparmargin{left}%
+  \sidepar{{%\textcolor{dimgray}%
+      ¶#1}}%
+}
+
+
+% --------------- smparag -----------------
+% paragraph sidepars
+\newcommand{\smparag}[2]{%
+  \par%
+  \smparnum{#1}%
+  \label{#2}%
+}
+
+
+
+% ----------------- Title --------------------  
+%   #1: starred: set in upshape
+%   #2: index
+%   #3: title name
+\NewDocumentCommand{\Title}{s m +m}
+{%
+  \IfBooleanTF{#1}%
+  {%
+    \index[titles]{\textup{#2}}%
+    \upshape{#3}%
+  }%
+  {%
+    \index[titles]{\textit{#2}}%
+    \textit{#3}%
+  }%
+}
+
+
+%----------------------------------------------------
+
+% \MS{}   (manuscripts)
+% #1: index
+% #2: title name
+\NewDocumentCommand{\MS}{m m}
+{%
+  \index[ms]{{%
+      \ifsmcolor\color{bulgarianrose}\fi%
+      \itshape#1}}%
+  {{%
+      \ifsmcolor\color{bulgarianrose}\fi%
+      \itshape#2}}%
+}
+
+%----------------------------------------------------
+
+% \ED{}   (editions)
+% #1: index
+% #2: title name
+\NewDocumentCommand{\ED}{m m}
+{%
+  \index[ed]{{%
+      \ifsmcolor\color{byzantium}\fi%
+      \itshape#1}}%
+  {{%
+      \ifsmcolor\color{byzantium}\fi%
+      \itshape#2}}%
+}
+
+%----------------------------------------------------
+
+\newcommand*{\elipsis}{{\smaller[1]\textup{[…]}}\kern0.2pt}
+
+\newcommand{\versal}[1]{\textsc{\MakeTextLowercase{#1}}}
+
+% \newcommand*{\Supplied}[1]{[#1]}
+
+\newcommand*{\Nombre}[1]{#1}
+
+\newcommand*{\Linum}[1]{{\ifsmcolor\color{Link}\fi#1.}}
+
+\newcommand*{\Link}[1]{{\ifsmcolor\color{Link}\fi#1}}
+
+\newcommand*{\abbrlink}[1]{{%
+    \ifsmcolor\color{Link}\fi%
+      \textsc{%
+      \MakeLowercase{%
+    #1}}}}
+
+\newcommand*{\LinkSM}[1]{{\ifsmcolor\color{darkred}\fi#1}}
+
+\newcommand*{\caesura}{{\color{gray}\small||}}
+
+
+% Vulgate cits.
+% #1: citekey (following SCTA-text)
+% #2: rendered text 
+\NewDocumentCommand{\VulgCit}{m +m}
+{%
+\href{https://scta.lombardpress.org/res?resourceid=http://scta.info/resource/#1}{\Link{#2}}%
+}
+
+
+% separate with a "," two consecutive note refs.
+\newcommand*{\notesep}{\unskip\textsuperscript{,}}
+
+
+% ===============================================
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
