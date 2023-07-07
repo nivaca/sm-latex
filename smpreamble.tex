@@ -16,7 +16,7 @@ final,
 \usepackage[english, german, french,
 % greek,
 greek.polytonic,
-welsh, french, latin.medieval,
+welsh, french, medievallatin,
 spanish .minimal .nolists .nolayout .noshorthands .noquoting .uppernames .tabla
 ]{babel}
 
@@ -33,8 +33,8 @@ Numbers=OldStyle,
 SmallCapsFeatures = {LetterSpace=5},
 % Script=Latin,
 ]%
-{Junicode Two Beta}
-% {Linux Libertine O}
+% {Junicode Two Beta}
+{Linux Libertine O}
 % {Cardo}
 % {EB Garamond}
 % {GaramondLibre}
@@ -69,7 +69,9 @@ final]{microtype}
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%% load packages  %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-\usepackage[autostyle=false, style=mexican, maxlevel=4]{csquotes}
+\usepackage[autostyle=false,
+  style=british, %mexican
+  maxlevel=4]{csquotes}
 \usepackage{latexcolors}
 \usepackage{xparse}
 \usepackage{etoolbox}
@@ -209,7 +211,7 @@ final]{microtype}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%% TOC       %%%%
+%%%%        TOC       %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 \renewcommand*{\cftpartfont}{\large\bfseries\scshape}
 \renewcommand*{\cftpartpagefont}{\bfseries\scshape}
@@ -286,7 +288,7 @@ indexing=cite,
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%% debug      %%%%
+%%%%       debug      %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 \usepackage{ifdraft}
 \ifdraft%
@@ -295,18 +297,19 @@ indexing=cite,
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%% macros     %%%%
+%%%%       macros     %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 \input{smmacros.tex}
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%% index       %%%%
+%%%%       index      %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 \makeindex
 \makeindex[names]
 \makeindex[titles]
+\makeindex[lex] % lexemas
 \makeindex[ms] % manuscritos
 \makeindex[ed] % ediciones incunables latinas
 
@@ -318,8 +321,9 @@ indexing=cite,
   \definecolor{Link}{HTML}{000000}
 \fi
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%% hyperref     %%%%
+%%%%     hyperref     %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{hyperref}
 \ifsmcolor
@@ -337,9 +341,16 @@ indexing=cite,
 \fi
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%     footnote     %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+% \usepackage[perpage]{footmisc}
+\usepackage[perpage]{zref}
+\zmakeperpage{footnote}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%% debug      %%%%
+%%%%       debug      %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 \ifdraft%
   {%

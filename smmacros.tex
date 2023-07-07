@@ -1,3 +1,6 @@
+% Labels: SMlabel{}
+\NewDocumentCommand{\smlabel}{m}{\MakeLinkTarget{}\label{#1}}
+
 % ------------------ \MyQ quote -----------------
 % #1: lang
 % #2: label
@@ -5,7 +8,7 @@
 \NewDocumentCommand{\MyQ}{m m +m}
 {%
   % check for label
-  \ifstrempty{#2}{\relax}{\label{#2}}%
+  \ifstrempty{#2}{\relax}{\smlabel{#2}}%
   % check for language
   {%
     \ifstrempty{#1}%
@@ -38,7 +41,7 @@
 {%
   {%
     % check for label
-    \ifstrempty{#2}{\relax}{\label{#2}}%
+    \ifstrempty{#2}{\relax}{\smlabel{#2}}%
       % select language of original quote
       \begin{otherlanguage*}{#1}%
         % #3: ---- original quote ----
@@ -71,15 +74,25 @@
 
 
 % -------------------- lexquote ---------------------
-\DeclareQuoteStyle{lexquotes}
-  {‹}{›}{‹}{›}
-  \newcommand*{\lexquote}[1]{%
-    \begingroup%
-    \setquotestyle{lexquotes}%
-    \enquote{#1}%
-    \endgroup%
-  }
-
+% \DeclareQuoteStyle{lexquotes}
+%   {‹}{›}{‹}{›}
+\NewDocumentCommand{\lexquote}{m}
+{%
+  % \begingroup%
+  % \setquotestyle{lexquotes}%
+  % \enquote{#1}%
+  \def\mylex{\scshape\MakeLowercase{\textup{#1}}}%
+  \mylex%
+  % \textsc{\textup{#1}}%
+  % \index[lex]{{\scshape\MakeLowercase{#1}}}%
+  \index[lex]{\mylex}%
+  % \endgroup%
+}
+% \NewDocumentCommand{\lexquote}{m}
+% {%
+%   \enquote{#1}%
+%   \index[lex]{#1}%
+% }
 
 % -------------------- indentedpar ---------------------
 \NewDocumentEnvironment{indentedpar}{}
@@ -124,7 +137,7 @@
 \newcommand{\smparag}[2]{%
   \par%
   \smparnum{#1}%
-  \label{#2}%
+  \smlabel{#2}%
 }
 
 
@@ -177,7 +190,7 @@
       \itshape#2}}%
 }
 
-%----------------------------------------------------
+% ----------------------------------------------------
 
 \newcommand*{\elipsis}{{\smaller[1]\textup{[…]}}\kern0.2pt}
 
@@ -187,7 +200,8 @@
 
 \newcommand*{\Nombre}[1]{#1}
 
-\newcommand*{\Linum}[1]{{\ifsmcolor\color{Link}\fi#1.}}
+\newcommand*{\Linum}[1]{{\ifsmcolor\color{crimson}\fi\textsuperscript{#1}}}
+
 
 \newcommand*{\Link}[1]{{\ifsmcolor\color{Link}\fi#1}}
 
