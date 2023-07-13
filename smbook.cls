@@ -1,4 +1,7 @@
-\documentclass[12pt,
+\ProvidesClass{smbook}
+        [2023/07/13 smbook class]
+
+\LoadClass[12pt,
 twoside,
 % draft,
 final,
@@ -28,22 +31,29 @@ spanish .minimal .nolists .nolayout .noshorthands .noquoting .uppernames .tabla
 \usepackage{fontspec}
 \defaultfontfeatures{Ligatures=TeX, Scale=MatchLowercase}
 \setmainfont[Ligatures=Common,
-Numbers=OldStyle,
-% ItalicFeatures = {Scale=1},
+Numbers = OldStyle,
+% BoldFont = {* SemiBold},
+% BoldItalicFont = {* SemiBold Italic}, 
 SmallCapsFeatures = {LetterSpace=5},
-% Script=Latin,
+ItalicFeatures = {Scale=1},
 ]%
-% {Junicode Two Beta}
-{Linux Libertine O}
-% {Cardo}
+{TeX Gyre PagellaX}
+% {Palatine Parliamentary}
+% {Linux Libertine O}
 % {EB Garamond}
+% {Junicode Two Beta}
+% {Baskervillef}
+% {Cochineal}
+% {Domitian}
+% {Coelacanth}
+% {TeX Gyre Pagella}
 % {GaramondLibre}
 % {Palatino Linotype}
 % {Minion Pro}
 
 % \babelfont[greek]{rm}{CMU Serif}
 \babelfont[greek]{rm}{Libertinus Serif}
-% \babelfont[greek]{rm}{KPRoman}
+% \babelfont[greek]{rm}{Galatia Sil}
 % \babelfont[greek]{rm}{GFSDidot}
 % \babelfont[greek]{rm}{Palatino Linotype}
 
@@ -96,7 +106,8 @@ final]{microtype}
 \flushbottom
 \raggedbottom
 \midsloppy
-\parindent=0pt
+% \parindent=0pt
+\parindent=14pt
 \frenchspacing
 \linespread{1.2}
 
@@ -258,7 +269,7 @@ indexing=cite,
 {%\usebibmacro{cite:init}%
   \usebibmacro{prenote}}%
 {\usebibmacro{citeindex}%
-  \printtext[bibhyperref]{{\textsc{\printfield{shorttitle}}}}}%
+  \printtext[bibhyperref]{{\textscfull{\printfield{shorttitle}}}}}%
 {\multicitedelim}%
 {\usebibmacro{postnote}}
 
@@ -266,7 +277,7 @@ indexing=cite,
 {%\usebibmacro{cite:init}%
   \usebibmacro{prenote}}%
 {\usebibmacro{citeindex}%
-  \printtext[bibhyperref]{{\textsc{\printfield{shorttitle}}}}}%
+  \printtext[bibhyperref]{{\textscfull{\printfield{shorttitle}}}}}%
 {\multicitedelim}%
 {\usebibmacro{postnote}}
 
@@ -292,16 +303,16 @@ indexing=cite,
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 \usepackage{ifdraft}
 \ifdraft%
-  {\newcommand*{\ShL}{\sidepar{{\ifsmcolor\color{ballblue}\fi\tiny\languagename}}}}%
+  {\newcommand*{\ShL}{%
+      \sidepar{{\ifsmcolor\color{ballblue}\fi\tiny\languagename}}}}%
   {\newcommand*{\ShL}{\relax}}
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%%       macros     %%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%% 
-\input{smmacros.tex}
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%       macros       %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{smmacros}
+  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%       index      %%%%
@@ -349,6 +360,8 @@ indexing=cite,
 \usepackage[perpage]{zref}
 \zmakeperpage{footnote}
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%       debug      %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -359,6 +372,9 @@ indexing=cite,
   }%
   {\relax}%
 
+
+  \endinput
+  
   % ===============================================
   %%% Local Variables:
   %%% mode: latex

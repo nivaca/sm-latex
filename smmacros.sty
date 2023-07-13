@@ -1,5 +1,24 @@
-% Labels: SMlabel{}
-\NewDocumentCommand{\smlabel}{m}{\MakeLinkTarget{}\label{#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%              smmacros.sty              %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ProvidesPackage{smmacros}
+        [2023/07/13 v1.0 Macros for smbook]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%       macros       %%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+% -----------\textscfull (versalitas completas) -----------
+\NewDocumentCommand{\textscfull}{m}%
+{\textsc{\MakeLowercase{{#1}}}}
+
+
+% ----------------- Labels: smlabel{} -----------------
+\NewDocumentCommand{\smlabel}{m}
+{\MakeLinkTarget{}\label{#1}}
+
 
 % ------------------ \MyQ quote -----------------
 % #1: lang
@@ -75,24 +94,18 @@
 
 % -------------------- lexquote ---------------------
 % \DeclareQuoteStyle{lexquotes}
-%   {‹}{›}{‹}{›}
-\NewDocumentCommand{\lexquote}{m}
+% {‹}{›}{‹}{›}
+% #1 (star): gets indexed
+% #2: text
+\NewDocumentCommand{\lexquote}{s m}
 {%
-  % \begingroup%
-  % \setquotestyle{lexquotes}%
-  % \enquote{#1}%
-  \def\mylex{\scshape\MakeLowercase{\textup{#1}}}%
+  \def\mylex{\textscfull{\textup{#2}}}%
   \mylex%
-  % \textsc{\textup{#1}}%
-  % \index[lex]{{\scshape\MakeLowercase{#1}}}%
-  \index[lex]{\mylex}%
-  % \endgroup%
+  \IfBooleanTF{#1}%
+  {%
+    \index[lex]{\mylex}%
+  }%
 }
-% \NewDocumentCommand{\lexquote}{m}
-% {%
-%   \enquote{#1}%
-%   \index[lex]{#1}%
-% }
 
 % -------------------- indentedpar ---------------------
 \NewDocumentEnvironment{indentedpar}{}
@@ -117,18 +130,33 @@
 
 
 % --------------- smparnum -----------------
-% paragraph sidepars
-\newcommand*{\smparnum}[1]{%
-  \sidepar{%
-    {\small¶#1}}%
+% paragraph sidepars (e.g. ¶1)
+\NewDocumentCommand{\smparnum}{m}
+{\sidepar{%
+    {%
+      \unskip%
+      \addfontfeature{Numbers=Lining}%
+      % \leavevmode is required to avoid extra space with color
+      \ifsmcolor\leavevmode\color{crimson}\fi%
+      \small%
+      \P% pilcrow
+      #1%
+    }%
+  }%
+  \ignorespaces%
 }
 
 % --------------- smnoteparnum -----------------
 % paragraph sidepars for notes
-\newcommand*{\smnoteparnum}[1]{%
+\NewDocumentCommand{\smnoteparnum}{m}
+{%
+  \unskip%
   \sideparmargin{left}%
   \sidepar{{%\textcolor{dimgray}%
-      ¶#1}}%
+      \P% pilcrow
+      #1%
+    }}%
+   \ignorespaces%
 }
 
 
@@ -192,24 +220,51 @@
 
 % ----------------------------------------------------
 
-\newcommand*{\elipsis}{{\smaller[1]\textup{[…]}}\kern0.2pt}
+% <ab> separator
+\newcommand{\absep}{%
+  \unskip% swallow preceding spaces
+  \hspace{1ex}\textbullet\hspace{1ex}%
+  \ignorespaces% swallow subsequent spaces
+}
 
-\newcommand{\versal}[1]{\textsc{\MakeTextLowercase{#1}}}
+\newcommand{\elipsis}{{\smaller[1]\textup{[…]}}\kern0.2pt}
 
-% \newcommand*{\Supplied}[1]{[#1]}
+\newcommand{\Nombre}[1]{#1}
 
-\newcommand*{\Nombre}[1]{#1}
+% -----------------------------------------------
+% Linum: line numbers at the beginning of a line
+\NewDocumentCommand{\linum}{m}
+{%
+  {%
+    \ifsmcolor\color{crimson}\fi%
+    \addfontfeature{Numbers=Lining, VerticalPosition=Superior}%
+    #1%
+    \kern1pt%
+  }%
+  \ignorespaces%
+}
 
-\newcommand*{\Linum}[1]{{\ifsmcolor\color{crimson}\fi\textsuperscript{#1}}}
+% -----------------------------------------------
+% linumcom: line numbers at the beginning of a line
+% (for the commentary part)
+\NewDocumentCommand{\linumcom}{m}
+{%
+  {%
+    \ifsmcolor\color{crimson}\fi%
+    \addfontfeature{Numbers=Lining, VerticalPosition=Superior}%
+    #1%
+    \kern1pt%
+  }%
+  \ignorespaces%
+}
+
 
 
 \newcommand*{\Link}[1]{{\ifsmcolor\color{Link}\fi#1}}
 
 \newcommand*{\abbrlink}[1]{{%
     \ifsmcolor\color{Link}\fi%
-      \textsc{%
-      \MakeLowercase{%
-    #1}}}}
+    \textscfull{#1}}}
 
 \newcommand*{\LinkSM}[1]{{\ifsmcolor\color{darkred}\fi#1}}
 
@@ -225,8 +280,7 @@
 }
 
 
-% separate with a "," two consecutive note refs.
-\newcommand*{\notesep}{\unskip\textsuperscript{,}}
+\endinput
 
 
 % ===============================================
