@@ -16,7 +16,7 @@ final,
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%% babel      %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-\usepackage[english, german, french,
+\RequirePackage[english, german, french,
 % greek,
 greek.polytonic,
 welsh, french, medievallatin,
@@ -28,7 +28,7 @@ spanish .minimal .nolists .nolayout .noshorthands .noquoting .uppernames .tabla
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%% fonts      %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-\usepackage{fontspec}
+\RequirePackage{fontspec}
 \defaultfontfeatures{Ligatures=TeX, Scale=MatchLowercase}
 \setmainfont[Ligatures=Common,
 Numbers = OldStyle,
@@ -37,19 +37,17 @@ Numbers = OldStyle,
 SmallCapsFeatures = {LetterSpace=5},
 ItalicFeatures = {Scale=1},
 ]%
-{TeX Gyre PagellaX}
-% {Palatine Parliamentary}
+% {TeX Gyre PagellaX}
 % {Linux Libertine O}
-% {EB Garamond}
+{EB Garamond}
 % {Junicode Two Beta}
 % {Baskervillef}
 % {Cochineal}
-% {Domitian}
 % {Coelacanth}
 % {TeX Gyre Pagella}
 % {GaramondLibre}
 % {Palatino Linotype}
-% {Minion Pro}
+
 
 % \babelfont[greek]{rm}{CMU Serif}
 \babelfont[greek]{rm}{Libertinus Serif}
@@ -62,9 +60,9 @@ ItalicFeatures = {Scale=1},
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%% microtype    %%%%
+%%%%    microtype     %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-\usepackage[babel=true,
+\RequirePackage[babel=true,
 verbose=false,
 tracking=true,
 expansion=true,
@@ -77,23 +75,23 @@ final]{microtype}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%% load packages  %%%%
+%%%%  load packages   %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-\usepackage[autostyle=false,
+\RequirePackage[autostyle=false,
   style=british, %mexican
   maxlevel=4]{csquotes}
-\usepackage{latexcolors}
-\usepackage{xparse}
-\usepackage{etoolbox}
-% \usepackage[margin=3cm]{geometry}
-\usepackage{graphicx}
-\usepackage{relsize}
-\usepackage{booktabs}
-\usepackage{lua-widow-control}
+\RequirePackage{latexcolors}
+\RequirePackage{xparse}
+\RequirePackage{etoolbox}
+% \RequirePackage[margin=3cm]{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{relsize}
+\RequirePackage{booktabs}
+\RequirePackage{lua-widow-control}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%% settings     %%%%
+%%%%     settings     %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 \righthyphenmin=62
 \lefthyphenmin=62
@@ -112,11 +110,11 @@ final]{microtype}
 \linespread{1.2}
 
 % Widow Control
-\usepackage{lua-widow-control}
+\RequirePackage{lua-widow-control}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-%%%% chapterstyle   %%%%
+%%%%   chapterstyle   %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 \makeatletter
 \makechapterstyle{smtrad}{%
@@ -208,7 +206,8 @@ final]{microtype}
     \interlinepenalty \@M
     \parskip\z@
     \normalfont\thispagestyle{empty}
-    \printparttitle{\textsc{\MakeTextUppercase{#2}}}\par}%
+    % \printparttitle{\textsc{\MakeTextUppercase{#2}}}\par}%
+    \printparttitle{\textcsc#2}\par}%
   \@endpart}
 \makeatother
 
@@ -253,7 +252,7 @@ final]{microtype}
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%% bibliography   %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-\usepackage[authordate,
+\RequirePackage[authordate,
 backend=biber,
 citetracker=true,
 hyperref=true,
@@ -269,7 +268,7 @@ indexing=cite,
 {%\usebibmacro{cite:init}%
   \usebibmacro{prenote}}%
 {\usebibmacro{citeindex}%
-  \printtext[bibhyperref]{{\textscfull{\printfield{shorttitle}}}}}%
+  \printtext[bibhyperref]{{\textcsc{\printfield{shorttitle}}}}}%
 {\multicitedelim}%
 {\usebibmacro{postnote}}
 
@@ -277,12 +276,15 @@ indexing=cite,
 {%\usebibmacro{cite:init}%
   \usebibmacro{prenote}}%
 {\usebibmacro{citeindex}%
-  \printtext[bibhyperref]{{\textscfull{\printfield{shorttitle}}}}}%
+  \printtext[bibhyperref]{{\textcsc{\printfield{shorttitle}}}}}%
 {\multicitedelim}%
 {\usebibmacro{postnote}}
 
 \newcommand*{\sv}{s.v.\ifcsundef{isdot}{\relax}{\isdot}}
 \newcommand*{\svv}{s.vv.\ifcsundef{isdot}{\relax}{\isdot}}
+
+\DeclareFieldFormat{shorttitle}{\textcsc{#1}}
+
 
 \DefineBibliographyStrings{spanish}{%
   editor = {editor},
@@ -301,7 +303,7 @@ indexing=cite,
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%       debug      %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
-\usepackage{ifdraft}
+\RequirePackage{ifdraft}
 \ifdraft%
   {\newcommand*{\ShL}{%
       \sidepar{{\ifsmcolor\color{ballblue}\fi\tiny\languagename}}}}%
@@ -311,7 +313,7 @@ indexing=cite,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%       macros       %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{smmacros}
+\RequirePackage{smmacros}
   
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -336,7 +338,7 @@ indexing=cite,
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 %%%%     hyperref     %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{hyperref}
+\RequirePackage{hyperref}
 \ifsmcolor
   \hypersetup{
     final=true,
@@ -356,8 +358,8 @@ indexing=cite,
 %%%%     footnote     %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \renewcommand*{\thefootnote}{\fnsymbol{footnote}}
-% \usepackage[perpage]{footmisc}
-\usepackage[perpage]{zref}
+% \RequirePackage[perpage]{footmisc}
+\RequirePackage[perpage]{zref}
 \zmakeperpage{footnote}
 
 
@@ -367,7 +369,7 @@ indexing=cite,
 %%%%%%%%%%%%%%%%%%%%%%%%%% 
 \ifdraft%
   {%
-    \usepackage[inline]{showlabels}%
+    \RequirePackage[inline]{showlabels}%
     \renewcommand{\showlabelfont}{\tiny\ifsmcolor\color{darkred}\fi}%
   }%
   {\relax}%

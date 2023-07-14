@@ -10,8 +10,9 @@
 %%%%       macros       %%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-% -----------\textscfull (versalitas completas) -----------
-\NewDocumentCommand{\textscfull}{m}%
+
+% -----------\textcsc (versalitas completas) -----------
+\NewDocumentCommand{\textcsc}{m}%
 {\textsc{\MakeLowercase{{#1}}}}
 
 
@@ -99,7 +100,7 @@
 % #2: text
 \NewDocumentCommand{\lexquote}{s m}
 {%
-  \def\mylex{\textscfull{\textup{#2}}}%
+  \def\mylex{\textcsc{\textup{#2}}}%
   \mylex%
   \IfBooleanTF{#1}%
   {%
@@ -264,7 +265,7 @@
 
 \newcommand*{\abbrlink}[1]{{%
     \ifsmcolor\color{Link}\fi%
-    \textscfull{#1}}}
+    \textcsc{#1}}}
 
 \newcommand*{\LinkSM}[1]{{\ifsmcolor\color{darkred}\fi#1}}
 
