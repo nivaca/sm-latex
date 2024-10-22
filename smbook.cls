@@ -37,25 +37,23 @@ Numbers = OldStyle,
 SmallCapsFeatures = {LetterSpace=5},
 ItalicFeatures = {Scale=1},
 ]%
-% {TeX Gyre PagellaX}
-% {Linux Libertine O}
-{EB Garamond}
-% {Junicode Two Beta}
-% {Baskervillef}
-% {Cochineal}
-% {Coelacanth}
-% {TeX Gyre Pagella}
-% {GaramondLibre}
-% {Palatino Linotype}
+% {LinuxLibertineO}
+% {GaramondLibre} % más oscura que ebg
+% {EBGaramond}
+% {Junicode}
+% {TeXGyrePagellaX}
+% {SourceSerifPro}
+{LibertinusSerif} % sin espacios!
+% {PalatinoLinotype}
 
 
 % \babelfont[greek]{rm}{CMU Serif}
-\babelfont[greek]{rm}{Libertinus Serif}
+\babelfont[greek]{rm}{LibertinusSerif}
 % \babelfont[greek]{rm}{Galatia Sil}
 % \babelfont[greek]{rm}{GFSDidot}
 % \babelfont[greek]{rm}{Palatino Linotype}
 
-\setmonofont[Scale=MatchLowercase]{JetBrains Mono NL}
+\setmonofont[Scale=MatchLowercase]{JetBrainsMonoNL}
 
 
 
@@ -206,8 +204,8 @@ final]{microtype}
     \interlinepenalty \@M
     \parskip\z@
     \normalfont\thispagestyle{empty}
-    % \printparttitle{\textsc{\MakeTextUppercase{#2}}}\par}%
-    \printparttitle{\textcsc#2}\par}%
+    \printparttitle{\textsc{\MakeTextUppercase{#2}}}\par}%
+    % \printparttitle{\textcsc#2}\par}%
   \@endpart}
 \makeatother
 
@@ -280,8 +278,10 @@ indexing=cite,
 {\multicitedelim}%
 {\usebibmacro{postnote}}
 
-\newcommand*{\sv}{s.v.\ifcsundef{isdot}{\relax}{\isdot}}
-\newcommand*{\svv}{s.vv.\ifcsundef{isdot}{\relax}{\isdot}}
+\newcommand*{\sv}{s.v.}
+% \newcommand*{\sv}{s.v.\ifcsundef{isdot}{\relax}{\isdot}}
+\newcommand*{\svv}{s.vv.}
+% \newcommand*{\svv}{s.vv.\ifcsundef{isdot}{\relax}{\isdot}}
 
 \DeclareFieldFormat{shorttitle}{\textcsc{#1}}
 
